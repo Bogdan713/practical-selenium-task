@@ -1,7 +1,10 @@
-<suite name="MailAutomationSuite" parallel="false">
-  <test name="SmokeTest">
+<suite name="Smoke Test Suite">
+  <listeners>
+    <listener class-name="org.example.helpers.TestListener" />
+  </listeners>
+  <test name="Smoke Test">
     <classes>
-      <class name="SmokeTest"/>
+      <class name="org.example.SmokeTest" />
     </classes>
   </test>
 </suite>

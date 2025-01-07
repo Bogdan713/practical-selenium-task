@@ -1,4 +1,15 @@
-import java.util.Random;
+package org.example;
+
+import static org.example.helpers.Constants.BODY;
+import static org.example.helpers.Constants.EMAIL;
+import static org.example.helpers.Constants.PASSWORD;
+import static org.example.helpers.Constants.SUBJECT;
+import static org.example.helpers.Constants.TO;
+import static org.example.helpers.Constants.YAHOO_URL;
+
+import org.example.driver.DriverFactory;
+import org.example.pages.LoginPage;
+import org.example.pages.MailPage;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -13,18 +24,12 @@ public class SmokeTest {
     private MailPage mailPage;
     private static final Logger logger = LogManager.getLogger(SmokeTest.class);
 
-    private final String email = "test_account713713@yahoo.com";
-    private final String password = "test_password";
-    private final String to = "bogdanprostov@gmail.com";
-    private final String subject = "Test Subject " + new Random().nextInt(100);
-    private final String body = "This is a test email body.";
-
     @BeforeClass
     public void setUp() {
         logger.info("Initializing WebDriver and setting up pages for Yahoo Mail.");
-        driver = DriverFactory.getDriver("chrome");
+        driver = DriverFactory.getDriver();
         driver.manage().window().maximize();
-        driver.get("https://login.yahoo.com/?.src=ym&pspid=1197806870&activity=header-signin&.lang=en-US&.intl=us&.done=https%3A%2F%2Fmail.yahoo.com%2Fd");
+        driver.get(YAHOO_URL);
         loginPage = new LoginPage(driver);
         mailPage = new MailPage(driver);
     }
@@ -32,7 +37,7 @@ public class SmokeTest {
     @Test(priority = 1)
     public void testLogin() {
         logger.info("Executing login test for Yahoo Mail.");
-        loginPage.login(email, password);
+        loginPage.login(EMAIL, PASSWORD);
         Assert.assertTrue(mailPage.isLoginSuccessful(), "Login was unsuccessful.");
         logger.info("Login test passed.");
     }
@@ -40,20 +45,20 @@ public class SmokeTest {
     @Test(priority = 2)
     public void testCreateDraft() {
         logger.info("Executing draft creation test.");
-        mailPage.createDraft(to, subject, body);
-        Assert.assertTrue(mailPage.isDraftPresent(subject), "Draft not found in the 'Drafts' folder.");
+        mailPage.createDraft(TO, SUBJECT, BODY);
+        Assert.assertTrue(mailPage.isDraftPresent(SUBJECT), "Draft not found in the 'Drafts' folder.");
         logger.info("Draft creation test passed.");
     }
 
     @Test(priority = 3)
     public void testVerifyDraftContent() {
         logger.info("Verifying draft content.");
-        Assert.assertTrue(mailPage.isDraftPresent(subject), "Draft with the specified subject does not exist.");
+        Assert.assertTrue(mailPage.isDraftPresent(SUBJECT), "Draft with the specified subject does not exist.");
 
-        mailPage.openDraft(subject);
-        Assert.assertEquals(mailPage.getDraftTo(1), to, "Recipient in draft does not match.");
-        Assert.assertEquals(mailPage.getDraftSubject(), subject, "Subject in draft does not match.");
-        Assert.assertEquals(mailPage.getDraftBody(), body, "Body in draft does not match.");
+        mailPage.openDraft(SUBJECT);
+        Assert.assertEquals(mailPage.getDraftTo(1), TO, "Recipient in draft does not match.");
+        Assert.assertEquals(mailPage.getDraftSubject(), SUBJECT, "Subject in draft does not match.");
+        Assert.assertEquals(mailPage.getDraftBody(), BODY, "Body in draft does not match.");
         logger.info("Draft content verification test passed.");
     }
 
@@ -61,8 +66,8 @@ public class SmokeTest {
     public void testSendMail() {
         logger.info("Executing mail sending test.");
         mailPage.sendDraft();
-        Assert.assertFalse(mailPage.isDraftPresent(subject), "Draft still present in the 'Drafts' folder.");
-        Assert.assertTrue(mailPage.isMailInSentFolder(subject), "Mail not found in the 'Sent' folder.");
+        Assert.assertFalse(mailPage.isDraftPresent(SUBJECT), "Draft still present in the 'Drafts' folder.");
+        Assert.assertTrue(mailPage.isMailInSentFolder(SUBJECT), "Mail not found in the 'Sent' folder.");
         logger.info("Mail sending test passed.");
     }
 
