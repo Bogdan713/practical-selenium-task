@@ -1,5 +1,7 @@
 package org.example.pages;
 
+import static org.example.helpers.Constants.YAHOO_LOGOUT_URL;
+
 import java.time.Duration;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -33,6 +35,6 @@ public class LoginPage extends BasePage {
     }
 
     public boolean isLogoutSuccessful() {
-        return wait.until(ExpectedConditions.urlToBe("https://www.yahoo.com/"));
+        return wait.until(ExpectedConditions.urlToBe(YAHOO_LOGOUT_URL));
     }
 }

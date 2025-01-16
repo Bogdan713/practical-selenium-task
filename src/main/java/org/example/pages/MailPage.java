@@ -1,5 +1,7 @@
 package org.example.pages;
 
+import static org.example.helpers.Constants.YAHOO_SUCCESS_URL;
+
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -110,6 +112,6 @@ public class MailPage extends BasePage {
     }
 
     public boolean isLoginSuccessful() {
-        return wait.until(ExpectedConditions.urlContains("mail.yahoo.com/d/"));
+        return wait.until(ExpectedConditions.urlContains(YAHOO_SUCCESS_URL));
     }
 }

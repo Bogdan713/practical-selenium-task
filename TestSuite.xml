@@ -4,7 +4,8 @@
   </listeners>
   <test name="Smoke Test">
     <classes>
-      <class name="org.example.SmokeTest" />
+      <class name="org.example.test.SmokeTest" />
+      <class name="org.example.test.RegressionTest" />
     </classes>
   </test>
 </suite>

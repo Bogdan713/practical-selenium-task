@@ -1,5 +1,8 @@
 package org.example.driver;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -9,6 +12,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
+import org.openqa.selenium.firefox.FirefoxOptions;
 
 public class DriverFactory {
     private static WebDriver driver;
@@ -33,12 +37,15 @@ public class DriverFactory {
                 case "chrome":
                     WebDriverManager.chromedriver().setup();
                     ChromeOptions options = new ChromeOptions();
-                    options.addArguments("--disable-blink-features=AutomationControlled", "--incognito");
+                    options.addArguments("--disable-blink-features=AutomationControlled");
+                    options.addArguments("--incognito");
                     driver = new ChromeDriver(options);
                     break;
                 case "firefox":
                     WebDriverManager.firefoxdriver().setup();
-                    driver = new FirefoxDriver();
+                    FirefoxOptions firefoxOptions = new FirefoxOptions();
+                    firefoxOptions.setBinary("D:\\Program Files\\Mozilla Firefox\\firefox.exe");
+                    driver = new FirefoxDriver(firefoxOptions);
                     break;
                 default:
                     throw new IllegalArgumentException("Unsupported browser: " + browser);
