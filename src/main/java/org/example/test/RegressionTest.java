@@ -4,10 +4,16 @@ import static org.example.helpers.Constants.EMAIL_BODY;
 import static org.example.helpers.Constants.EMAIL_SUBJECT;
 import static org.example.helpers.Constants.RECEIVER_EMAIL;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.example.helpers.TestListener;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-
+@Listeners(TestListener.class)
 public class RegressionTest extends BaseTest {
+
+    protected static final Logger logger = LogManager.getLogger(RegressionTest.class);
     @Test
     public void testCreateDraft() {
         logger.info("Executing draft creation test.");

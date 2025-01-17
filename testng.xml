@@ -1,3 +1,0 @@
-<listeners>
-  <listener class-name="org.example.helpers.TestListener"/>
-</listeners>

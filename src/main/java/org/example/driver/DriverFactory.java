@@ -1,17 +1,13 @@
 package org.example.driver;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import io.github.bonigarcia.wdm.WebDriverManager;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import io.github.bonigarcia.wdm.WebDriverManager;
-
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.Properties;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
 public class DriverFactory {
@@ -51,6 +47,8 @@ public class DriverFactory {
                     throw new IllegalArgumentException("Unsupported browser: " + browser);
             }
         }
+
+
         driver = new WebDriverDecorator(driver);
         return driver;
     }

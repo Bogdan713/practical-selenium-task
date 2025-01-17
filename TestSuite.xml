@@ -1,8 +1,9 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.1.dtd">
 <suite name="Smoke Test Suite">
   <listeners>
     <listener class-name="org.example.helpers.TestListener" />
   </listeners>
-  <test name="Smoke Test">
+  <test name="Test Suite All">
     <classes>
       <class name="org.example.test.SmokeTest" />
       <class name="org.example.test.RegressionTest" />

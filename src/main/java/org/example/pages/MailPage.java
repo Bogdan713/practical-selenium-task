@@ -1,16 +1,11 @@
 package org.example.pages;
 
-import static org.example.helpers.Constants.YAHOO_SUCCESS_URL;
-
+import java.util.List;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
-import java.util.List;
 
 public class MailPage extends BasePage {
 
@@ -49,19 +44,17 @@ public class MailPage extends BasePage {
     @FindBy(xpath = "//span[text()='Sign out']")
     private WebElement signOutButton;
 
-    private final WebDriverWait wait;
-
     public MailPage(WebDriver driver) {
         super(driver);
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
-    public void createDraft(String to, String subject, String body) {
+    public MailPage createDraft(String to, String subject, String body) {
         composeButton.click();
         wait.until(ExpectedConditions.visibilityOf(toField)).sendKeys(to);
         subjectField.sendKeys(subject);
         bodyField.sendKeys(body);
         saveDraftButton.click();
+        return new MailPage(driver);
     }
 
     public boolean isDraftPresent(String subject) {
@@ -73,7 +66,7 @@ public class MailPage extends BasePage {
         return draftEmails.stream().anyMatch(draft -> draft.getText().contains(subject));
     }
 
-    public void openDraft(String subject) {
+    public MailPage openDraft(String subject) {
         draftsFolder.click();
         wait.until(ExpectedConditions.visibilityOfAllElements(draftEmails));
         draftEmails.stream()
@@ -81,6 +74,7 @@ public class MailPage extends BasePage {
                    .findFirst()
                    .orElseThrow(() -> new RuntimeException("Draft not found: " + subject))
                    .click();
+        return new MailPage(driver);
     }
 
     public String getDraftTo(int recipientID) {
@@ -109,9 +103,5 @@ public class MailPage extends BasePage {
     public void logout() {
         accountMenu.click();
         wait.until(ExpectedConditions.visibilityOf(signOutButton)).click();
-    }
-
-    public boolean isLoginSuccessful() {
-        return wait.until(ExpectedConditions.urlContains(YAHOO_SUCCESS_URL));
     }
 }
