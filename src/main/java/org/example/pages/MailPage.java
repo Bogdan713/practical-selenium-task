@@ -9,7 +9,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class MailPage extends BasePage {
 
-    @FindBy(xpath = "//a[contains(@aria-label, 'Compose')]")
+    @FindBy(xpath = "//a[@data-test-id='compose-button']")
     private WebElement composeButton;
 
     @FindBy(id = "message-to-field")

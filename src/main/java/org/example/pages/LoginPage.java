@@ -36,6 +36,6 @@ public class LoginPage extends BasePage {
     }
 
     public boolean isLoginSuccessful() {
-        return true;//wait.until(ExpectedConditions.urlContains(YAHOO_SUCCESS_URL));
+        return wait.until(ExpectedConditions.urlContains(YAHOO_SUCCESS_URL));
     }
 }

@@ -38,8 +38,9 @@ public class RegressionTest extends BaseTest {
     @Test
     public void testSendMail() {
         logger.info("Executing mail sending test.");
-        mailPage.createDraft(RECEIVER_EMAIL, EMAIL_SUBJECT, EMAIL_BODY);
-        mailPage.sendDraft();
+        mailPage.createDraft(RECEIVER_EMAIL, EMAIL_SUBJECT, EMAIL_BODY)
+            .openDraft(EMAIL_SUBJECT)
+            .sendDraft();
         Assert.assertFalse(mailPage.isDraftPresent(EMAIL_SUBJECT), "Draft still present in the 'Drafts' folder.");
         Assert.assertTrue(mailPage.isMailInSentFolder(EMAIL_SUBJECT), "Mail not found in the 'Sent' folder.");
         logger.info("Mail sending test passed.");
