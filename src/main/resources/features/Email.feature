@@ -1,3 +1,4 @@
+# main feature
 Feature: Email functionality
 
   Background:
