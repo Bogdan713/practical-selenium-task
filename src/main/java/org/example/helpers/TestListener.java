@@ -1,5 +1,6 @@
 package org.example.helpers;
 
+import com.epam.reportportal.message.ReportPortalMessage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.example.driver.DriverFactory;
@@ -31,6 +32,9 @@ public class TestListener implements ITestListener {
                 Files.createDirectories(new File("screenshots").toPath());
                 Files.copy(screenshot.toPath(), new File(screenshotPath).toPath());
                 logger.error("Screenshot saved at {}", screenshotPath);
+                String rp_message = "screenshot msg for rp";
+                ReportPortalMessage message = new ReportPortalMessage(screenshot, rp_message);
+                logger.info(message);
             } catch (IOException e) {
                 logger.error("Error while saving screenshot: {}", e.getMessage(), e);
             }
